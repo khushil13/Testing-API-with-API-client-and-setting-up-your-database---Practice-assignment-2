@@ -1,10 +1,17 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
 const app = express();
-app.use(bodyParser.json());
+const booksRoutes = require('./routes/server'); // Import routes
 
-const PORT = process.env.PORT || 3000;
+app.use(express.json()); // Middleware to parse JSON
+
+app.use('/books', booksRoutes); // Use routes for books
+
+// ✅ Default route to check if the server is running
+app.get('/', (req, res) => {
+    res.send('Library Management API is running!');
+});
+
+const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
